@@ -76,8 +76,8 @@
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
                                     <Image Source="F:\Test1\Assets\bussiness-man.png" Height="32" Width="32" Margin="0,0,16,0"/>
                                     <StackPanel>
-                                        <TextBlock Text="Parth Patil" FontSize="16"/>
-                                        <TextBlock Text="@pdp30082003" FontSize="12" Foreground="Gray"/>
+                                        <TextBlock Name ="MainpageUsername" Text="none" FontSize="16"/>
+                                        <TextBlock Name ="MainpageAddress_display" Text="none" FontSize="12" Foreground="Gray"/>
                                     </StackPanel>
                                 </StackPanel>
                                 <Button Content="LogOut" FontSize="18" HorizontalAlignment="Center" Click="Button_Click"/>
