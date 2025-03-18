@@ -18,6 +18,7 @@ using System.Text;
 using System.Net;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -51,11 +52,23 @@ namespace Test1
             }
         }
 
+        public static bool IsValidEmail(string email)
+        {
+            string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+            return Regex.IsMatch(email, pattern);
+        }
         private async void savebtn_Click(object sender, RoutedEventArgs e)
         {
             string username = UsernameTextBox.Text;
-            string email = EmailTextBox.Text;
+            string email = EmailTextBox.Text.Trim();
             string password = PassWord.Password;
+            
+            // email format validator
+            if (!IsValidEmail(email))
+            {
+                ErrorMessageTextBlock.Text = "Invalid email format!";
+                return;
+            }
 
             HttpClient client = new HttpClient();
             string Registerurl = "https://localhost:7018/api/LoginInfoes/register";
