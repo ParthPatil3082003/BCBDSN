@@ -103,7 +103,12 @@ namespace Test1
         {
             UsernameTextBox.Text = "";
             PassWord.Password = "";
-       }
+
+            MainWindow m_window = new MainWindow();
+            m_window.Activate();
+
+            this.Close();
+        }
 
         private void RegPage_Click(object sender, RoutedEventArgs e)
         {

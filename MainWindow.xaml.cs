@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -16,6 +17,9 @@ using Microsoft.UI.Xaml.Navigation;
 using Newtonsoft.Json;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Graphics;
+using Microsoft.UI.Windowing;
+
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -33,6 +37,16 @@ namespace Test1
         {
             this.InitializeComponent();
             FileListView.ItemsSource = files;
+
+            IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+
+            // Get the AppWindow from the handle
+            var windowId = Win32Interop.GetWindowIdFromWindow(hwnd);
+            AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
+
+
+            appWindow.Resize(new SizeInt32(1200, 775));
+
 
 
         }
@@ -82,11 +96,12 @@ namespace Test1
             Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
             if (file != null)
             {
-                ProcessFile(file);
+              //  ProcessFile(file);
                 var properties = await file.GetBasicPropertiesAsync();
-                var fileSize = properties.Size.ToString();  // Get file size
+                double fileSize = properties.Size / 1024;  // Get file size
+                string filesizeinkb = $"{fileSize:F2} KB";
 
-                var newItem = new FileItem { Name = file.Name, Size = fileSize, Date = DateTime.Now.ToShortDateString() };
+                var newItem = new FileItem { Name = file.Name, Size = filesizeinkb, Date = DateTime.Now.ToShortDateString() };
                 files.Add(newItem);
             }
         }
@@ -119,5 +134,10 @@ namespace Test1
             this.Close();
 
         }
+        private void MainWindow_Closed(object sender, WindowEventArgs e)
+        {
+            LogoutFromDB(); // Call your logout function
+        }
+
     }
 }

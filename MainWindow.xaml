@@ -50,7 +50,7 @@
                                     </ToggleButton>
 
 
-                                    <Button Height="80" Width="100"  Margin="16,0,0,0">
+                                    <Button Height="80" Width="100"  Margin="16,0,0,0" IsEnabled="False">
                                         <Button.Content>
                                             <StackPanel>
                                                 <Image Source="F:\Test1\Assets\payment-method.png" Height="32" Width="32"/>
@@ -140,7 +140,7 @@
                                     <Image Source="F:\Test1\Assets\chain.png" Height="32" Width="32" Margin="0,0,0,8"/>
                                     <TextBlock Text="Blocks Mined"/>
                                 </StackPanel>
-                                <TextBlock Text="95" FontSize="42" FontWeight="Bold" VerticalAlignment="Center" Margin="16,16,16,16"/>
+                                <TextBlock x:Name="Blocks" Text="10" FontSize="68" FontWeight="Bold" VerticalAlignment="Center" Margin="16,16,16,16"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -148,7 +148,7 @@
                                     <Image Source="F:\Test1\Assets\submit.png" Height="32" Width="32" Margin="0,0,0,8"/>
                                     <TextBlock Text="Files Uploaded"/>
                                 </StackPanel>
-                                <TextBlock Text="95" FontSize="42" FontWeight="Bold" VerticalAlignment="Center" Margin="16,16,16,16"/>
+                                <TextBlock x:Name="Uploads" Text="15" FontSize="68" FontWeight="Bold" VerticalAlignment="Center" Margin="16,16,16,16"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -156,7 +156,7 @@
                                     <Image Source="F:\Test1\Assets\coin.png" Height="32" Width="32" Margin="0,0,0,8"/>
                                     <TextBlock Text="Coins Earned"/>
                                 </StackPanel>
-                                <TextBlock Text="95" FontSize="42" FontWeight="Bold" VerticalAlignment="Center" Margin="16,16,16,16"/>
+                                <TextBlock x:Name="Coins" Text="50" FontSize="68" FontWeight="Bold" VerticalAlignment="Center" Margin="16,16,16,16"/>
                             </StackPanel>
                         </Grid>
                         <StackPanel Grid.Row="1">
