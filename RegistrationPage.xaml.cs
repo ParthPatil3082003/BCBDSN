@@ -36,27 +36,29 @@ namespace Test1
         }
 
 
-        private void GenerateMasterKey()
+        static string GenerateMasterKey(int byteLength)
         {
-            using (var rng = new RNGCryptoServiceProvider())
+            using (Aes aes = Aes.Create())
             {
-                byte[] keyBytes = new byte[32]; // 32 bytes = 256 bits
-                rng.GetBytes(keyBytes); // Fill the array with random bytes
+                aes.KeySize = 256; // AES-256
+                aes.GenerateKey();
+                aes.GenerateIV();
 
-                // Convert the key to a hexadecimal string (optional)
-                string hexKey = BitConverter.ToString(keyBytes).Replace("-", "").ToLower();
+                // Convert key and IV to Base64 strings
+                string keyBase64 = Convert.ToBase64String(aes.Key);
+                string ivBase64 = Convert.ToBase64String(aes.IV);
 
-                // Store the key in a file called "config"
-                File.WriteAllText("config", hexKey);
-
+                // Save to file as: key;iv
+                string content = $"{keyBase64};{ivBase64}";
+                return content;
             }
         }
-
         public static bool IsValidEmail(string email)
         {
             string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
             return Regex.IsMatch(email, pattern);
         }
+
         private async void savebtn_Click(object sender, RoutedEventArgs e)
         {
             string username = UsernameTextBox.Text;
@@ -71,7 +73,7 @@ namespace Test1
             }
 
             HttpClient client = new HttpClient();
-            string Registerurl = "https://localhost:7018/api/LoginInfoes/register";
+            string Registerurl = "https://dbserver01.azurewebsites.net/api/LoginInfoes/register";
 
             var newUser = new
             {
@@ -88,7 +90,45 @@ namespace Test1
 
             if (postresponse.IsSuccessStatusCode)
             {
-                //GenerateMasterKey();
+                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string dnStorePath = Path.Combine(documentsPath, "DNStore");
+                string userFolderPath = Path.Combine(dnStorePath, username);
+
+                if (!Directory.Exists(dnStorePath))
+                {
+                    Directory.CreateDirectory(dnStorePath);
+                }
+
+                if (!Directory.Exists(userFolderPath))
+                {
+                    Directory.CreateDirectory(userFolderPath);
+                }
+
+                string mainstoragePath = Path.Combine(userFolderPath, "storage");
+                string uploadqueuePath = Path.Combine(userFolderPath, "uploadData");
+                string configPath = Path.Combine(userFolderPath, "config");
+
+                if (!Directory.Exists(mainstoragePath))
+                {
+                    Directory.CreateDirectory(mainstoragePath);
+                }
+
+                if (!Directory.Exists(uploadqueuePath))
+                {
+                    Directory.CreateDirectory(uploadqueuePath);
+                }
+
+
+                if (!Directory.Exists(configPath))
+                {
+                    Directory.CreateDirectory(configPath);
+                }
+
+
+
+                string masterKey = GenerateMasterKey(32);
+                string secretfile = Path.Combine(configPath, "secret.txt");
+                File.WriteAllText(secretfile, masterKey);
                 BlankWindow1 logW = new BlankWindow1();
                 logW.Activate();
                 this.Close();

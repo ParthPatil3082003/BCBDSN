@@ -18,7 +18,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Image Source="F:\Test1\Assets\Pixel-7-Wallpaper-1.jpg" Stretch="UniformToFill"/>
+            <Image Source="C:\Users\kshit\Downloads\BCBDSN-master\\Assets\Pixel-7-Wallpaper-1.jpg" Stretch="UniformToFill"/>
 
 
             <StackPanel VerticalAlignment="Center">

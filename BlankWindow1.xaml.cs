@@ -43,7 +43,7 @@ namespace Test1
         private async Task<bool> AuthenticateUser(string username, string password)
         {
             HttpClient client = new HttpClient();
-            string Loginurl = "https://localhost:7018/api/LoginInfoes/login";
+            string Loginurl = "https://dbserver01.azurewebsites.net/api/LoginInfoes/login";
             var loginuser = new
             {
                 username = username,
@@ -64,7 +64,7 @@ namespace Test1
 
                 
 
-                string goOnlineURL = "https://localhost:7018/api/OnlineNodes/GoOnline";
+                string goOnlineURL = "https://dbserver01.azurewebsites.net/api/OnlineNodes/GoOnline";
                 string goOnlinejson = JsonConvert.SerializeObject(goonline);
                 var goOnlinecontent = new StringContent(goOnlinejson, Encoding.UTF8, "application/json");
                 HttpResponseMessage goOnlineresponse = await GoOnlineclient.PostAsync(goOnlineURL, goOnlinecontent);
